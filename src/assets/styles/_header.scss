@@ -1,0 +1,110 @@
+.header{
+  background: mediumseagreen;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  .header-content{
+    width: 100%;
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .header-logo{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .logo-link{
+        font-size: 40px;
+        color: black;
+      }
+    }
+    .header-menu{
+      width: 44%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .main-menu{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        .menu-list{
+          width: 33.33%;
+          height: 40px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          .meni-link{
+            font-size: 20px;
+            line-height: 40px;
+            color: black;
+            text-align: center;
+            padding: 20px;
+            &:hover{
+              background: darkslategray;
+              color: whitesmoke;
+            }
+          }
+        }
+      }
+    }
+    .header-sign{
+      width: 15%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      .sign-link{
+        width: 55%;
+        .sign-button{
+          font-size: 16px;
+          color: black;
+          cursor: pointer;
+          width: 100%;
+          padding: 10px;
+          background: whitesmoke;
+          border-radius: 5px;
+          outline: none;
+          border: none;
+          &:hover{
+            background: lightgoldenrodyellow;
+            color: darkslategray;
+          }
+        }
+      }
+      .exit{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        cursor: pointer;
+        width: 35px;
+        height: 35px;
+        margin-right: 10%;
+        &:hover span{
+          background: darkslategray;
+          &:after{
+            background: darkslategray;
+          }
+        }
+        span{
+          display: block;
+          width: 35px;
+          height: 2px;
+          background: #fff;
+          transform: rotate(45deg);
+          &:after{
+            content: "";
+            display: block;
+            width: 35px;
+            height: 2px;
+            background: #fff;
+            transform: rotate(-90deg);
+          }
+        }
+      }
+    }
+  }
+}

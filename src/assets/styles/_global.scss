@@ -1,0 +1,58 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6, p{
+  margin: 0;
+  padding: 0;
+}
+
+h1{
+  font-size: 64px;
+  font-weight: 700;
+}
+
+h2{
+  font-size: 48px;
+  font-weight: 700;
+}
+
+h3{
+  font-size: 40px;
+  font-weight: 700;
+}
+
+h4{
+  font-size: 24px;
+  font-weight: 500;
+}
+
+h5{
+  font-size: 20px;
+  font-weight: 400;
+}
+
+h6{
+  font-size: 18px;
+  font-weight: 400;
+}
+
+a{
+  font-size: 18px;
+  font-weight: 400;
+}
+
+p{
+  font-size: 14px;
+  font-weight: 400;
+}
+
+ul{
+  list-style: none;
+}
+
+a{
+  text-decoration: none;
+}
