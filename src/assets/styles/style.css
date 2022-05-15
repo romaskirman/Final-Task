@@ -17,7 +17,7 @@ h2 {
 
 h3 {
   font-size: 40px;
-  font-weight: 700; }
+  font-weight: 400; }
 
 h4 {
   font-size: 24px;
@@ -140,5 +140,68 @@ body {
             height: 2px;
             background: #fff;
             transform: rotate(-90deg); }
+
+.main-page {
+  height: calc(100vh - 180px);
+  background: linear-gradient(45deg, #FFFFFF, #98FB98); }
+  .main-page .main-page-container {
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+    .main-page .main-page-container .greeting {
+      position: relative;
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; }
+      .main-page .main-page-container .greeting .your-balance {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 16px; }
+      .main-page .main-page-container .greeting .greeting-text {
+        text-align: center; }
+    .main-page .main-page-container .your-device {
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; }
+      .main-page .main-page-container .your-device .device-info {
+        text-align: center; }
+
+.footer {
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  background: mediumseagreen;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .footer .contacts {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center; }
+  .footer .social-media {
+    margin-top: 10px;
+    line-height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; }
+    .footer .social-media .social-media-link {
+      margin-right: 10px; }
+  .footer .copyright {
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center; }
 
 /*# sourceMappingURL=style.css.map */
