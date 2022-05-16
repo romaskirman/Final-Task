@@ -1,9 +1,11 @@
-@import "./_global";
+@import "utils/global";
 
-@import "./fonts";
+@import "utils/fonts";
 
-@import "./header";
+@import "index-pages/header";
 
-@import "./main-page";
+@import "index-pages/main-page";
 
-@import "./footer";
+@import "index-pages/footer";
+
+@import "login/sign-in";
