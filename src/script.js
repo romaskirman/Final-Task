@@ -67,12 +67,57 @@ const handleSubmit = (e) => {
     console.log(userData);
     localStorage.setItem('data', JSON.stringify(dataArray)); // создаём item в хранилище и кладём туда наш массив (в 1 раз это будет исходный массив, все последующие - изменённый)
     dataArray = JSON.parse(localStorage.getItem('data')); // получаем массив из хранилища
-    dataArray.push(userData); // добавляем новый элемент в конец массива
-    localStorage.setItem('data', JSON.stringify(dataArray)); // перезаписываем изменённый массив в хранилище
+    let currentIndex;
+    if (signBtn.innerText === 'Sign In') {
+        for ( let i = 0; i < dataArray.length; i++) {
+            if (dataArray[i].email === email) {
+                currentIndex = i;
+                    if (dataArray[currentIndex].guid !== password && dataArray[currentIndex].password !== password) {
+                        //userEmail.value = '';
+                        userPassword.value = '';
+                        alert('Incorrect password!');
+                        return null;
+                    }
+                break;
+            }
+            else if (i === dataArray.length - 1) {
+                //userEmail.value = '';
+                userPassword.value = '';
+                alert('There are no such user in system!');
+                return null;
+            }
+        }
+    }
+    else {
+        let confirmPassword = document.getElementById('confirm-field');
+        let matchPassword = confirmPassword.value;
+        if (password !== matchPassword) {
+            alert('Passwords dont match!');
+            userPassword.value = '';
+            confirmPassword.value = '';
+            return null;
+        }
+        for ( let i = 0; i < dataArray.length; i++) {
+            if (dataArray[i].email === email) {
+                alert('There is already a user with this email');
+                userEmail.value = '';
+                userPassword.value = '';
+                confirmPassword.value = '';
+                return null;
+            }
+        }
+        dataArray.push(userData); // добавляем новый элемент в конец массива
+        currentIndex = dataArray.indexOf(userData);
+        localStorage.setItem('data', JSON.stringify(dataArray)); // перезаписываем изменённый массив в хранилище
+    }
     console.log(dataArray); // вывод изменённого массива для проверки
     document.documentElement.innerHTML = '';
-    let greeting = dataArray[0].greeting;
-    let balance = 'Your balance: ' + dataArray[0].balance;
+    let greeting = dataArray[currentIndex].greeting !== undefined ? dataArray[currentIndex].greeting
+        : 'Hello, ' + dataArray[currentIndex].email.split('@')[0] + '! You have 1 unread message.';
+    if (dataArray[currentIndex].balance === undefined){
+        dataArray[currentIndex].balance = '$0.00';
+    }
+    let balance = 'Your balance: ' + dataArray[currentIndex].balance;
     let device = 'You are logged in from ' + getDevice() + '.';
     document.documentElement.innerHTML = `
                 <!DOCTYPE html>
@@ -174,6 +219,21 @@ const handleSubmit = (e) => {
         </body>
         </html>
     `;
+
+    let activeLink = document.querySelectorAll('.meni-link')[0];
+    activeLink.style.cssText = `
+        text-decoration: underline;
+    `;
+
+    let exitBtn = document.querySelector('.exit');
+    exitBtn.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+
+    let signButton = document.querySelector('.sign-button');
+    signButton.addEventListener('click', () => {
+       window.location.href = 'index.html';
+    });
 }
 
 regForm.addEventListener('submit', handleSubmit);
