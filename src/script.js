@@ -37,7 +37,9 @@ const regForm = document.querySelector('.reg-form');
 
 let DATA_LINK = 'https://gist.githubusercontent.com/oDASCo/3f4014d24dc79e1e29b58bfa96afaa1b/raw/677516ee3bd278f7e3d805108596ca431d00b629/db.json';
 
-let dataArray = [];
+let dataArray = []; // промежуточный массив
+let currentData = []; // объединённый массив с 100 исходными пользователями и добавленными (lsArray)
+let lsArray = []; // массив с новыми пользователями (берётся из localStorage, где хранится массив с добавленными пользователями)
 
 async function getClient(url) {
     const resp = await fetch(url);
@@ -48,9 +50,15 @@ async function getClient(url) {
 
 getClient(DATA_LINK).then(
     result => {
-        let isLocalStorage = JSON.parse(localStorage.getItem('data'));
-        dataArray = isLocalStorage !== null ? isLocalStorage : result; // кладём исходные данные с сервера (ссылки) в пустой массив
-        console.log(dataArray);
+        let newUsers = JSON.parse(localStorage.getItem('data')); // получаем свежий массив новых клиентов из localStorage
+        if (newUsers) {
+            lsArray = newUsers;
+            currentData = result.concat(lsArray); // соединяем исходных и новых клиентов в один массив
+        }
+        else {
+            currentData = result;
+        }
+        console.log(currentData);
     }
 );
 
@@ -65,8 +73,7 @@ const handleSubmit = (e) => {
         "password": password,
     };
     console.log(userData);
-    localStorage.setItem('data', JSON.stringify(dataArray)); // создаём item в хранилище и кладём туда наш массив (в 1 раз это будет исходный массив, все последующие - изменённый)
-    dataArray = JSON.parse(localStorage.getItem('data')); // получаем массив из хранилища
+    dataArray = currentData; // передаем в этот массив свежий массив с 100 исходными и всеми нашими добавленными клиентами
     let currentIndex;
     if (signBtn.innerText === 'Sign In') {
         for ( let i = 0; i < dataArray.length; i++) {
@@ -108,7 +115,10 @@ const handleSubmit = (e) => {
         }
         dataArray.push(userData); // добавляем новый элемент в конец массива
         currentIndex = dataArray.indexOf(userData);
-        localStorage.setItem('data', JSON.stringify(dataArray)); // перезаписываем изменённый массив в хранилище
+
+        lsArray.push(userData);
+        console.log(lsArray); // то что лежит на данном этапе в localStorage
+        localStorage.setItem('data', JSON.stringify(lsArray)); // перезаписываем изменённый массив в хранилище
     }
     console.log(dataArray); // вывод изменённого массива для проверки
     document.documentElement.innerHTML = '';
@@ -251,9 +261,3 @@ function getDevice() {
     else if (isiPad){return 'iPad';}
     else {return 'PC';}
 }
-
-
-
-
-
-
