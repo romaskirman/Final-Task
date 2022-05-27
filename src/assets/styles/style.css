@@ -1,3 +1,6 @@
+html {
+  overflow-x: hidden; }
+
 * {
   margin: 0;
   padding: 0;
@@ -288,5 +291,116 @@ body {
     line-height: 1.5; }
     .switch-registration .switch-link:hover {
       text-decoration: underline; }
+
+.clients-page {
+  background: linear-gradient(90deg, #FFFFFF, #98FB98); }
+  .clients-page .clients-info {
+    width: 100%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; }
+    .clients-page .clients-info .extra-info {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around; }
+      .clients-page .clients-info .extra-info .men-women {
+        width: 11%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between; }
+        .clients-page .clients-info .extra-info .men-women .men {
+          padding: 5px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between; }
+          .clients-page .clients-info .extra-info .men-women .men img {
+            padding: 2px; }
+          .clients-page .clients-info .extra-info .men-women .men .m-count {
+            font-size: 16px;
+            padding: 1px; }
+        .clients-page .clients-info .extra-info .men-women .women {
+          padding: 5px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between; }
+          .clients-page .clients-info .extra-info .men-women .women img {
+            padding: 2px; }
+          .clients-page .clients-info .extra-info .men-women .women .w-count {
+            font-size: 16px;
+            padding: 1px; }
+      .clients-page .clients-info .extra-info .max-balance {
+        font-size: 25px; }
+    .clients-page .clients-info .clients-table {
+      margin: 30px 0;
+      width: 100%;
+      padding: 10px;
+      border: 2px solid black;
+      border-radius: 5px; }
+      .clients-page .clients-info .clients-table .client {
+        position: relative;
+        padding: 5px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between; }
+        .clients-page .clients-info .clients-table .client .left-info {
+          width: 33%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between; }
+        .clients-page .clients-info .clients-table .client .client-name {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 25px; }
+        .clients-page .clients-info .clients-table .client .right-info {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          justify-content: space-between; }
+          .clients-page .clients-info .clients-table .client .right-info .client-delete {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between; }
+            .clients-page .clients-info .clients-table .client .right-info .client-delete img {
+              margin-left: 9px; }
+    .clients-page .clients-info .back-block .back-button {
+      font-size: 16px;
+      color: black;
+      cursor: pointer;
+      width: 100%;
+      padding: 10px;
+      background: whitesmoke;
+      border-radius: 5px;
+      outline: none;
+      border: none; }
+
+.notification {
+  background-color: whitesmoke;
+  height: 100px;
+  width: 200px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0; }
+
+.text {
+  text-align: center; }
 
 /*# sourceMappingURL=style.css.map */
