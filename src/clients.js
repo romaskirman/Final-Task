@@ -12,7 +12,15 @@ let clientsArray = [];
 
 getClient(DATA_LINK).then(
     result => {
-        clientsArray = result;
+        //localStorage.removeItem('clientsArray'); // ВРУЧНУЮ ОЧИСТИТЬ ХРАНИЛИЩЕ
+        let localStorageClients = JSON.parse(localStorage.getItem('clientsArray')); // получаем текущий массив клиентов (без удалённых) из хранилища
+        console.log(localStorageClients);
+        if (localStorageClients) { // если в хранилище что-то лежит
+            clientsArray = localStorageClients; // то это наш текущий массив без удалённых клиентов
+        }
+        else { // если хранилище пустое
+            clientsArray = result; // то кладем в массив всех клиентов с сервера
+        }
         console.log(clientsArray); // выводим массив полученных клиентов
         let mCount = 0;
         let wCount = 0;
@@ -22,9 +30,19 @@ getClient(DATA_LINK).then(
         let womenCount = document.querySelector('.w-count');
         let maxBalance = document.querySelector('.max-balance');
         let clientsTable = document.querySelector('.clients-table'); // получаем пустую таблицу для вставки div клиентов
-        for (let i = 0; i < clientsArray.length; i++) { // пробегаемся по каждому клиенту в массиве
 
-            let numBalance = clientsArray[i].balance.replace(',', '');
+        let newArray = [];
+
+        for (let i = 0; i < clientsArray.length; i++) {
+            if (clientsArray[i].balance) {
+                newArray.push(clientsArray[i]);
+            }
+        }
+
+        console.log(newArray);
+
+        for (let i = 0; i < newArray.length; i++) { // пробегаемся по каждому клиенту в массиве
+            let numBalance = newArray[i].balance.replace(',', '');
             let cutBalance = numBalance.replace('$', '');
             if (cutBalance > mBalance) {
                 mBalance = cutBalance;
@@ -33,14 +51,14 @@ getClient(DATA_LINK).then(
             let divClient = document.createElement('div'); // создаем для клиента div
             divClient.classList.add('client');
             divClient.id = i;
-            if (clientsArray[i].gender === 'male') {
+            if (newArray[i].gender === 'male') {
                 divClient.style.border = '1px solid blue';
             }
-            else if (clientsArray[i].gender === 'female') {
+            else if (newArray[i].gender === 'female') {
                 divClient.style.border = '1px solid red';
             }
 
-            if (clientsArray[i].isActive === true) {
+            if (newArray[i].isActive === true) {
                 divClient.style.backgroundColor = 'white';
             }
             else {
@@ -49,15 +67,15 @@ getClient(DATA_LINK).then(
 
             let divBalance = document.createElement('div'); // div для баланса
             divBalance.classList.add('client-balance');
-            divBalance.innerText = 'Balance: ' + clientsArray[i].balance; // записываем инфу
+            divBalance.innerText = 'Balance: ' + newArray[i].balance; // записываем инфу
 
             let divMail = document.createElement('div'); // div для почты
             divMail.classList.add('client-mail');
-            divMail.innerText = 'Email: ' + clientsArray[i].email; // записываем инфу
+            divMail.innerText = 'Email: ' + newArray[i].email; // записываем инфу
 
             let divCompany = document.createElement('div'); // div для компании
             divCompany.classList.add('client-company');
-            divCompany.innerText = 'Company: ' + clientsArray[i].company; // записываем инфу
+            divCompany.innerText = 'Company: ' + newArray[i].company; // записываем инфу
 
             let leftInfo = document.createElement('div'); // div для инфы слева
             leftInfo.classList.add('left-info');
@@ -68,12 +86,12 @@ getClient(DATA_LINK).then(
 
             let divName = document.createElement('div'); // div для имени (инфы по центру)
             divName.classList.add('client-name');
-            divName.innerText = clientsArray[i].name; // записываем инфу
+            divName.innerText = newArray[i].name; // записываем инфу
             divClient.append(divName); // вставляем в div клиента (центральный столбец)
 
             let divDelete = document.createElement('div'); // div для удаления
             divDelete.classList.add('client-delete');
-            if (clientsArray[i].isActive === true) {
+            if (newArray[i].isActive === true) {
                 divDelete.innerHTML = `<div> Online </div><img class="delete-btn" width="25" height="25" src="./assets/images/del.png" alt="del button">`; // вставляем иконку удаления, клиент онлайн
             }
             else {
@@ -82,11 +100,11 @@ getClient(DATA_LINK).then(
 
             let divPhone = document.createElement('div'); // div для телефона
             divPhone.classList.add('client-phone');
-            divPhone.innerText = 'Phone: ' + clientsArray[i].phone; // записываем инфу
+            divPhone.innerText = 'Phone: ' + newArray[i].phone; // записываем инфу
 
             let divDate = document.createElement('div'); // div для даты
             divDate.classList.add('client-date');
-            divDate.innerText = 'Registered: ' + clientsArray[i].registered; // записываем инфу
+            divDate.innerText = 'Registered: ' + newArray[i].registered; // записываем инфу
 
             let rightInfo = document.createElement('div'); // div для инфы справа
             rightInfo.classList.add('right-info');
@@ -97,7 +115,7 @@ getClient(DATA_LINK).then(
 
             clientsTable.append(divClient); // вставляем готовый div клиента в нашу таблицу
 
-            if (clientsArray[i].gender === 'male') {
+            if (newArray[i].gender === 'male') {
                 mCount++;
             }
             else {
@@ -110,6 +128,31 @@ getClient(DATA_LINK).then(
                 if (conf) {
                     let delClient = document.getElementById(i);
                     delClient.remove();
+                    let numBalance = newArray[i].balance.replace(',', '');
+                    console.log(numBalance);
+                    let cutBalance = numBalance.replace('$', '');
+
+                    newArray.splice(i, 1, {deleted: true}); // удаляем клиента из массива
+                    console.log(newArray);
+                    console.log(cutBalance);
+                    console.log(mBalance);
+                    if (cutBalance === mBalance) { // если удаляемый клиент имел наибольший баланс
+                        window.location.href = 'clients.html';
+                    }
+
+                    mCount = 0; // обнуляем счётчик мужчин
+                    wCount = 0; // женщин
+                    for (let i = 0; i < newArray.length; i++) { // вновь проходимся по массиву после удаления клиента
+                        if (newArray[i].gender === 'male') {
+                            mCount++; // считаем мужчин
+                        } else {
+                            wCount++; // женщин
+                        }
+                    }
+                    menCount.innerText = mCount; // отображаем число мужчин
+                    womenCount.innerText = wCount; // женщин
+                    localStorage.setItem('clientsArray', JSON.stringify(newArray)); // при каждом удалении клиента перезаписываем оставшихся в хранилище
+
                     let notification = document.createElement('div');
                     notification.classList.add('notification');
 
@@ -125,15 +168,31 @@ getClient(DATA_LINK).then(
                     notifText.classList.add('text');
                     notification.append(close);
                     notification.append(notifText);
-                    document.body.append(notification);
+
+                    let addNotification = () => {
+                        document.body.append(notification);
+                    };
+
+                    if (document.body.childElementCount === 4) {
+                        addNotification();
+                    }
+                    if (document.body.childElementCount === 5) {
+                        document.body.lastChild.remove();
+                        setTimeout(addNotification, 100);
+                    }
                 }
             });
         }
 
         menCount.innerText = mCount;
         womenCount.innerText = wCount;
-
         maxBalance.innerText = 'Max balance: $' + mBalance;
+
+        let addAllClients = document.querySelector('.add-all-button');
+        addAllClients.addEventListener('click', () => { // если нажата кнопка добавить всех клиентов с сервера
+            localStorage.removeItem('clientsArray'); // очищаем хранилище
+            window.location.href = 'clients.html'; // перезагружаем страницу для отображения всех клиентов
+        });
     }
 );
 
@@ -142,15 +201,23 @@ footer.style.cssText = `
     position: static;
 `;
 
-let exitBtn = document.querySelector('.exit');
-exitBtn.addEventListener('click', () => {
-    window.location.href = 'index.html';
-});
+let headerContent = document.querySelector('.header-content');
+headerContent.style.cssText = `
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+`;
 
-let signButton = document.querySelector('.sign-button');
-signButton.addEventListener('click', () => {
-    window.location.href = 'index.html';
-});
+let headerLogo = document.querySelector('.header-logo');
+headerLogo.style.cssText = `
+    margin-right: 10px;
+`;
+
+let headerSign = document.querySelector('.header-sign');
+headerSign.style.cssText = `
+    visibility: hidden;
+`;
 
 activeLink = document.querySelectorAll('.meni-link')[1];
 activeLink.style.cssText = `

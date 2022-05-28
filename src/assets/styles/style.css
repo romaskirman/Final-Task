@@ -372,16 +372,31 @@ body {
             justify-content: space-between; }
             .clients-page .clients-info .clients-table .client .right-info .client-delete img {
               margin-left: 9px; }
-    .clients-page .clients-info .back-block .back-button {
-      font-size: 16px;
-      color: black;
-      cursor: pointer;
+    .clients-page .clients-info .back-block {
       width: 100%;
-      padding: 10px;
-      background: whitesmoke;
-      border-radius: 5px;
-      outline: none;
-      border: none; }
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between; }
+      .clients-page .clients-info .back-block .add-all-button {
+        font-size: 16px;
+        color: black;
+        cursor: pointer;
+        width: 124px;
+        padding: 10px;
+        background: #98FB98;
+        border-radius: 5px;
+        outline: none;
+        border: none; }
+      .clients-page .clients-info .back-block .back-button {
+        font-size: 16px;
+        color: black;
+        cursor: pointer;
+        width: 124px;
+        padding: 10px;
+        background: whitesmoke;
+        border-radius: 5px;
+        outline: none;
+        border: none; }
 
 .notification {
   background-color: whitesmoke;
@@ -402,5 +417,8 @@ body {
 
 .text {
   text-align: center; }
+
+.delete-btn:hover {
+  cursor: pointer; }
 
 /*# sourceMappingURL=style.css.map */

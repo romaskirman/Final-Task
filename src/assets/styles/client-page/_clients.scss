@@ -102,11 +102,26 @@
       }
     }
     .back-block{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .add-all-button{
+        font-size: 16px;
+        color: black;
+        cursor: pointer;
+        width: 124px;
+        padding: 10px;
+        background: #98FB98;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+      }
       .back-button{
         font-size: 16px;
         color: black;
         cursor: pointer;
-        width: 100%;
+        width: 124px;
         padding: 10px;
         background: whitesmoke;
         border-radius: 5px;
@@ -137,4 +152,6 @@
 .text{
   text-align: center;
 }
-
+.delete-btn:hover{
+  cursor: pointer;
+}
