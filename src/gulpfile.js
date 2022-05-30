@@ -20,10 +20,10 @@ function browsersync() {
 }
 
 function html() {
-    return src('index.html')
+    return src('**/*.html')
         //.pipe(pug({
-            //pretty: true,
-            //locals: data || {},
+        //pretty: true,
+        //locals: data || {},
         //}))
         .pipe(dest('build'))
         .pipe(browserSync.stream())
@@ -42,7 +42,7 @@ function css() {
 }
 
 function js() {
-    return src('script.js')
+    return src('**/*.js')
         .pipe(dest('build'))
         .pipe(browserSync.stream())
 }
@@ -65,15 +65,15 @@ function clear() {
 }
 
 
-function startWatch() {
-    watch('**/*.html', html)
-    watch('assets/styles/**/*.scss', css)
-    watch('assets/images/**/*', images)
-    watch('assets/fonts/**/*', fonts)
-    watch('**/*.js', js)
-}
+//function startWatch() {
+//    watch('**/*.html', html)
+//    watch('assets/styles/**/*.scss', css)
+//    watch('assets/images/**/*', images)
+//    watch('assets/fonts/**/*', fonts)
+//    watch('**/*.js', js)
+//}
 
-exports.dev = parallel(browsersync, startWatch, html, images, fonts, css, js)
+exports.dev = parallel(browsersync, html, images, fonts, css, js)
 exports.build = series(clear, parallel(html, images, fonts, css, js))
 
 

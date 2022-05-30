@@ -13,15 +13,16 @@ let clientsArray = [];
 getClient(DATA_LINK).then(
     result => {
         //localStorage.removeItem('clientsArray'); // ВРУЧНУЮ ОЧИСТИТЬ ХРАНИЛИЩЕ
+
         let localStorageClients = JSON.parse(localStorage.getItem('clientsArray')); // получаем текущий массив клиентов (без удалённых) из хранилища
-        console.log(localStorageClients);
+        // console.log(localStorageClients);
         if (localStorageClients) { // если в хранилище что-то лежит
             clientsArray = localStorageClients; // то это наш текущий массив без удалённых клиентов
         }
         else { // если хранилище пустое
             clientsArray = result; // то кладем в массив всех клиентов с сервера
         }
-        console.log(clientsArray); // выводим массив полученных клиентов
+        // console.log(clientsArray); // выводим массив полученных клиентов
         let mCount = 0;
         let wCount = 0;
         let mBalance = 0;
@@ -39,7 +40,7 @@ getClient(DATA_LINK).then(
             }
         }
 
-        console.log(newArray);
+        // console.log(newArray);
 
         for (let i = 0; i < newArray.length; i++) { // пробегаемся по каждому клиенту в массиве
             let numBalance = newArray[i].balance.replace(',', '');
@@ -51,13 +52,13 @@ getClient(DATA_LINK).then(
             let divClient = document.createElement('div'); // создаем для клиента div
             divClient.classList.add('client');
             divClient.id = i;
+
             if (newArray[i].gender === 'male') {
                 divClient.style.border = '1px solid blue';
             }
             else if (newArray[i].gender === 'female') {
                 divClient.style.border = '1px solid red';
             }
-
             if (newArray[i].isActive === true) {
                 divClient.style.backgroundColor = 'white';
             }
@@ -82,6 +83,7 @@ getClient(DATA_LINK).then(
             leftInfo.append(divBalance); // вставляем в левый столбец
             leftInfo.append(divMail); // вставляем в левый столбец
             leftInfo.append(divCompany); // вставляем в левый столбец
+
             divClient.append(leftInfo); // вставляем в div клиента
 
             let divName = document.createElement('div'); // div для имени (инфы по центру)
@@ -91,6 +93,7 @@ getClient(DATA_LINK).then(
 
             let divDelete = document.createElement('div'); // div для удаления
             divDelete.classList.add('client-delete');
+
             if (newArray[i].isActive === true) {
                 divDelete.innerHTML = `<div> Online </div><img class="delete-btn" width="25" height="25" src="./assets/images/del.png" alt="del button">`; // вставляем иконку удаления, клиент онлайн
             }
@@ -111,6 +114,7 @@ getClient(DATA_LINK).then(
             rightInfo.append(divDelete); // вставляем в правый столбец
             rightInfo.append(divPhone); // вставляем в правый столбец
             rightInfo.append(divDate); // вставляем в правый столбец
+
             divClient.append(rightInfo); // вставляем в div клиента
 
             clientsTable.append(divClient); // вставляем готовый div клиента в нашу таблицу
@@ -129,13 +133,10 @@ getClient(DATA_LINK).then(
                     let delClient = document.getElementById(i);
                     delClient.remove();
                     let numBalance = newArray[i].balance.replace(',', '');
-                    console.log(numBalance);
                     let cutBalance = numBalance.replace('$', '');
 
                     newArray.splice(i, 1, {deleted: true}); // удаляем клиента из массива
-                    console.log(newArray);
-                    console.log(cutBalance);
-                    console.log(mBalance);
+                    // console.log(newArray); // массив без удаленных клиентов (на месте удаленных клиентов обьект с ключом deleted)
                     if (cutBalance === mBalance) { // если удаляемый клиент имел наибольший баланс
                         window.location.href = 'clients.html';
                     }
@@ -145,12 +146,13 @@ getClient(DATA_LINK).then(
                     for (let i = 0; i < newArray.length; i++) { // вновь проходимся по массиву после удаления клиента
                         if (newArray[i].gender === 'male') {
                             mCount++; // считаем мужчин
-                        } else {
+                        } else if (newArray[i].gender === 'female') {
                             wCount++; // женщин
                         }
                     }
                     menCount.innerText = mCount; // отображаем число мужчин
                     womenCount.innerText = wCount; // женщин
+
                     localStorage.setItem('clientsArray', JSON.stringify(newArray)); // при каждом удалении клиента перезаписываем оставшихся в хранилище
 
                     let notification = document.createElement('div');
@@ -169,15 +171,17 @@ getClient(DATA_LINK).then(
                     notification.append(close);
                     notification.append(notifText);
 
+
+                    let notificationSection = document.querySelector('.noti-sect');
                     let addNotification = () => {
-                        document.body.append(notification);
+                        notificationSection.append(notification);
                     };
 
-                    if (document.body.childElementCount === 4) {
-                        addNotification();
+                    if (!notificationSection.childNodes.length) { // если в этой секции нет детей-элементов
+                        addNotification(); // то добавить уведомление
                     }
-                    if (document.body.childElementCount === 5) {
-                        document.body.lastChild.remove();
+                    if (notificationSection.childNodes.length) {
+                        notificationSection.lastChild.remove();
                         setTimeout(addNotification, 100);
                     }
                 }
@@ -201,17 +205,9 @@ footer.style.cssText = `
     position: static;
 `;
 
-let headerContent = document.querySelector('.header-content');
-headerContent.style.cssText = `
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-`;
-
 let headerLogo = document.querySelector('.header-logo');
 headerLogo.style.cssText = `
-    margin-right: 10px;
+    margin-right: 11px;
 `;
 
 let headerSign = document.querySelector('.header-sign');
